@@ -46,7 +46,11 @@ Plans:
   2. After logging in, refreshing the browser keeps the user logged in on the correct dashboard
   3. A user with invalid credentials sees an error message and cannot proceed
   4. Clicking logout from any dashboard clears the session and returns the user to the LOGIN view
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Auth namespace, escapeHtml utility, and dashboard CSS
+- [ ] 02-02-PLAN.md — Dashboard render functions, login submit handler, logout binding + human verify
 
 ### Phase 3: Invite System
 **Goal**: The admin can generate and share invite codes; a new user can register an account using a valid invite code and immediately access the app
