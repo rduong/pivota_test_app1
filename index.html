@@ -202,7 +202,64 @@
     <!-- All views rendered here by Router -->
   </div>
   <script>
-    // All JavaScript namespaces go here — populated in Plans 02 and 03
+    // ===== Config namespace — localStorage key constants and defaults =====
+    const Config = {
+      KEYS: {
+        USERS:   'todoapp_users',
+        INVITES: 'todoapp_invites',
+        SESSION: 'todoapp_session',
+        TODOS:   (username) => `todoapp_todos_${username}`,
+      },
+      DEFAULTS: {
+        ADMIN_USERNAME: 'admin',
+        ADMIN_PASSWORD: 'admin123',
+      }
+    };
+
+    // ===== Storage namespace — error-resilient localStorage wrappers =====
+    const Storage = {
+      get(key, fallback = null) {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw === null ? fallback : JSON.parse(raw);
+        } catch (e) {
+          console.warn(`[Storage] parse failed for key "${key}"`, e);
+          return fallback;
+        }
+      },
+      set(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch (e) {
+          console.warn(`[Storage] write failed for key "${key}"`, e);
+        }
+      },
+      remove(key) {
+        localStorage.removeItem(key);
+      }
+    };
+
+    // ===== hashPassword — async SHA-256 via SubtleCrypto =====
+    async function hashPassword(password) {
+      const msgUint8 = new TextEncoder().encode(password);
+      const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgUint8);
+      // Use Array fallback — Uint8Array.toHex() not available in Safari 14
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // ===== generateUUID — crypto.randomUUID() with Safari 14 polyfill =====
+    function generateUUID() {
+      if (typeof crypto.randomUUID === 'function') {
+        return crypto.randomUUID();
+      }
+      // Polyfill for Safari 14 (randomUUID available in Safari 15.4+)
+      return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      );
+    }
+
+    // Bootstrap namespace — added in next commit (Task 2)
   </script>
 </body>
 </html>
