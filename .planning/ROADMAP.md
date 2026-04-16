@@ -12,7 +12,7 @@ This project delivers a pure-frontend SPA (HTML/CSS/JS) for team task management
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - App shell, data persistence layer, and admin bootstrapping
+- [x] **Phase 1: Foundation** - App shell, data persistence layer, and admin bootstrapping
 - [ ] **Phase 2: Authentication** - Login, session management, logout, and role-based routing
 - [ ] **Phase 3: Invite System** - Invite code generation (admin) and registration via invite code (user)
 - [ ] **Phase 4: Todo Management** - Full user-facing todo CRUD with filters and persistence
@@ -33,9 +33,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — HTML scaffold, Outfit font, CSS design system with custom properties
-- [ ] 01-02-PLAN.md — Config, Storage, hashPassword, generateUUID, Bootstrap (data layer + admin seed)
-- [ ] 01-03-PLAN.md — Router state machine, UI render functions, async init() entry point + human verify
+- [x] 01-01-PLAN.md — HTML scaffold, Outfit font, CSS design system with custom properties
+- [x] 01-02-PLAN.md — Config, Storage, hashPassword, generateUUID, Bootstrap (data layer + admin seed)
+- [x] 01-03-PLAN.md — Router state machine, UI render functions, async init() entry point + human verify
 
 ### Phase 2: Authentication
 **Goal**: Users can securely log in, maintain their session across refreshes, and be routed to the correct dashboard by role; users can log out from any view
@@ -92,6 +92,7 @@ Plans:
   3. No edit, delete, or status-change controls are visible or functional in the admin's read-only view of a user's todos
   4. Admin can navigate back from ADMIN_VIEW_USER to ADMIN_DASHBOARD without losing state
   5. A regular (non-admin) user navigating directly to the admin view is blocked and redirected to their USER_DASHBOARD
+**Plans**: TBD
 
 ## Progress
 
@@ -100,8 +101,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
-| 2. Authentication | 0/TBD | Not started | - |
-| 3. Invite System | 0/TBD | Not started | - |
+| 1. Foundation | 3/3 | Complete | 2026-04-16 |
+| 2. Authentication | 0/2 | Not started | - |
+| 3. Invite System | 0/3 | Not started | - |
 | 4. Todo Management | 0/TBD | Not started | - |
 | 5. Admin Visibility | 0/TBD | Not started | - |

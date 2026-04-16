@@ -9,7 +9,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Application Shell & Navigation
 
-- [ ] **F0**: Single HTML document with 5 view states (LOGIN, REGISTER, ADMIN_DASHBOARD, USER_DASHBOARD, ADMIN_VIEW_USER), client-side router, Outfit font via Google Fonts, responsive layout at ≥375px
+- [x] **F0**: Single HTML document with 5 view states (LOGIN, REGISTER, ADMIN_DASHBOARD, USER_DASHBOARD, ADMIN_VIEW_USER), client-side router, Outfit font via Google Fonts, responsive layout at ≥375px
 
 ### Authentication & Session Management
 
@@ -37,11 +37,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Data Persistence Layer
 
-- [ ] **F7**: All data mutations write to localStorage immediately on change; data is loaded on app start; parse failures are handled gracefully; storage keys are namespaced to avoid collisions
+- [x] **F7**: All data mutations write to localStorage immediately on change; data is loaded on app start; parse failures are handled gracefully; storage keys are namespaced to avoid collisions
 
 ### Default Admin Bootstrapping
 
-- [ ] **F8**: On first run, a default admin account (admin / admin123) is seeded into localStorage; a first-run notice is shown; bootstrapping is idempotent (does not re-seed if data already exists)
+- [x] **F8**: On first run, a default admin account (admin / admin123) is seeded into localStorage; a first-run notice is shown; bootstrapping is idempotent (does not re-seed if data already exists)
 
 ## v2 Requirements
 
@@ -72,9 +72,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| F0 | Phase 1 | Pending |
-| F7 | Phase 1 | Pending |
-| F8 | Phase 1 | Pending |
+| F0 | Phase 1 | Complete |
+| F7 | Phase 1 | Complete |
+| F8 | Phase 1 | Complete |
 | F1 | Phase 2 | Pending |
 | F2 | Phase 3 | Pending |
 | F3 | Phase 3 | Pending |
@@ -89,4 +89,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-04-16*
-*Last updated: 2026-04-16 after initial definition*
+*Last updated: 2026-04-16 — Roadmap regenerated; Phase 1 requirements marked complete (F0, F7, F8)*
