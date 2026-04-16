@@ -30,7 +30,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. On first load with no existing data, a default admin account (admin / admin123) is present and usable
   4. A first-run notice or indicator is shown to signal that the app has been initialized
   5. All localStorage keys are namespaced; a corrupt/invalid localStorage entry does not crash the app
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — HTML scaffold, Outfit font, CSS design system with custom properties
+- [ ] 01-02-PLAN.md — Config, Storage, hashPassword, generateUUID, Bootstrap (data layer + admin seed)
+- [ ] 01-03-PLAN.md — Router state machine, UI render functions, async init() entry point + human verify
 
 ### Phase 2: Authentication
 **Goal**: Users can securely log in, maintain their session across refreshes, and be routed to the correct dashboard by role; users can log out from any view
