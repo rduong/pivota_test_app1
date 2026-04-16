@@ -58,7 +58,12 @@ Plans:
   3. A visitor can navigate to the REGISTER view, enter a valid invite code plus credentials, and create an account
   4. Attempting to register with an invalid or already-used invite code shows an error and does not create an account
   5. A newly registered user is immediately logged in and taken to their USER_DASHBOARD
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — InviteCodes namespace (create/find/markUsed/list) + Users.register() with 7-step validation chain
+- [ ] 03-02-PLAN.md — Replace renderRegister() + renderAdminDashboard() stubs; wire all Phase 3 bindEvents() handlers
+- [ ] 03-03-PLAN.md — Human verify: all 5 Phase 3 success criteria confirmed in browser
 
 ### Phase 4: Todo Management
 **Goal**: Logged-in users can fully manage their todo list — create, edit, complete, and delete items — with the list persisted across sessions and filterable by status
