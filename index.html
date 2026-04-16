@@ -259,7 +259,31 @@
       );
     }
 
-    // Bootstrap namespace — added in next commit (Task 2)
+    // ===== Bootstrap namespace — idempotent first-run admin account seeding =====
+    const Bootstrap = {
+      async init() {
+        // FR-F8.1: Check if users already exist — if so, do nothing (idempotency)
+        const users = Storage.get(Config.KEYS.USERS, []);
+        if (users.length > 0) {
+          return { firstRun: false };
+        }
+
+        // FR-F8.2: First run — seed default admin account
+        // MUST await hashPassword — it's async (SubtleCrypto returns Promise)
+        const passwordHash = await hashPassword(Config.DEFAULTS.ADMIN_PASSWORD);
+        const adminUser = {
+          username: Config.DEFAULTS.ADMIN_USERNAME,
+          passwordHash,            // 64-char hex SHA-256 string
+          role: 'admin',
+          registeredAt: new Date().toISOString(),
+          inviteCode: null
+        };
+        Storage.set(Config.KEYS.USERS, [adminUser]);
+
+        // FR-F8.3: Signal first-run state so Router can show first-run notice
+        return { firstRun: true };
+      }
+    };
   </script>
 </body>
 </html>
