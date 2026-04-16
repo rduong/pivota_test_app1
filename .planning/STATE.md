@@ -3,14 +3,14 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Completed 01-02-PLAN.md — JavaScript data layer: Config, Storage, hashPassword, generateUUID, Bootstrap"
-last_updated: "2026-04-16T14:35:58.397Z"
-last_activity: 2026-04-16 — Completed 01-01 (HTML scaffold + CSS design system)
+stopped_at: "Checkpoint: Task 2 human-verify in 01-03-PLAN.md — awaiting visual verification of Phase 1 in browser"
+last_updated: "2026-04-16T14:39:00.845Z"
+last_activity: "2026-04-16 — Completed 01-02 (JavaScript data layer: Config, Storage, hashPassword, generateUUID, Bootstrap)"
 progress:
   total_phases: 5
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
   percent: 67
 ---
 
@@ -52,6 +52,7 @@ Progress: [███████░░░] 67%
 - Trend: —
 
 *Updated after each plan completion*
+| Phase 01-foundation P03 | 1 min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,8 @@ Recent decisions affecting current work:
 - [Phase 01-02]: SubtleCrypto SHA-256 with Array.from(Uint8Array) for Safari 14 compatibility — no external crypto library
 - [Phase 01-02]: Storage wrapper isolates all localStorage access — callers never call localStorage directly
 - [Phase 01-02]: Bootstrap.init() idempotency via users.length > 0 guard — await hashPassword() mandatory (SubtleCrypto async)
+- [Phase 01-foundation]: bindEvents() called AFTER innerHTML in every Router.render() path — ensures DOM elements exist before event binding
+- [Phase 01-foundation]: Router state machine with 5 view states and role/session guards — all navigation via Router.navigate(), never direct DOM manipulation
 
 ### Pending Todos
 
@@ -81,6 +84,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-16T14:35:58.395Z
-Stopped at: Completed 01-02-PLAN.md — JavaScript data layer: Config, Storage, hashPassword, generateUUID, Bootstrap
+Last session: 2026-04-16T14:39:00.843Z
+Stopped at: Checkpoint: Task 2 human-verify in 01-03-PLAN.md — awaiting visual verification of Phase 1 in browser
 Resume file: None
