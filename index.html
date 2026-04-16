@@ -9,7 +9,192 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* CSS design system goes here — see Task 2 */
+    /* ===== CSS Design System — TodoApp ===== */
+
+    /* 1. Custom Properties (Design Tokens) */
+    :root {
+      /* Color Palette */
+      --color-bg:            #FFFFFF;
+      --color-surface:       #F8F9FA;
+      --color-border:        #E9ECEF;
+      --color-primary:       #4361EE;
+      --color-primary-hover: #3A56D4;
+      --color-accent-admin:  #7B2FBE;
+      --color-text:          #212529;
+      --color-text-muted:    #6C757D;
+      --color-error:         #DC3545;
+      --color-success:       #198754;
+      --color-completed:     #ADB5BD;
+
+      /* Typography — Outfit loaded via Google Fonts CDN */
+      --font-family:    'Outfit', Arial, sans-serif;
+      --font-size-h1:   28px;
+      --font-size-h2:   20px;
+      --font-size-h3:   16px;
+      --font-size-body: 15px;
+      --font-size-sm:   13px;
+      --font-size-btn:  14px;
+
+      /* Spacing Scale (8px base unit) */
+      --space-xs:  4px;
+      --space-sm:  8px;
+      --space-md:  16px;
+      --space-lg:  24px;
+      --space-xl:  32px;
+      --space-2xl: 48px;
+
+      /* Border Radius */
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-pill: 999px;
+    }
+
+    /* 2. Base Reset */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      font-size: var(--font-size-body);
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      min-height: 100vh;
+    }
+
+    #app {
+      min-height: 100vh;
+    }
+
+    /* 3. Auth Page Layout (LOGIN and REGISTER views) */
+    .auth-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: var(--space-lg);
+      background-color: var(--color-surface);
+    }
+
+    .app-title {
+      font-size: var(--font-size-h1);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-lg);
+      letter-spacing: -0.5px;
+    }
+
+    .auth-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      width: 100%;
+      max-width: 380px;
+    }
+
+    /* 4. Form Element Styles */
+    .field-group {
+      margin-bottom: var(--space-md);
+    }
+
+    .field-group label {
+      display: block;
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      color: var(--color-text);
+      margin-bottom: var(--space-xs);
+    }
+
+    .field-group input[type="text"],
+    .field-group input[type="password"] {
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+      font-family: var(--font-family);
+      font-size: var(--font-size-body);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .field-group input:focus {
+      border-color: var(--color-primary);
+    }
+
+    .field-error {
+      display: block;
+      font-size: var(--font-size-sm);
+      color: var(--color-error);
+      margin-top: var(--space-xs);
+      min-height: 18px;
+    }
+
+    /* 5. Button Styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-sm) var(--space-md);
+      font-family: var(--font-family);
+      font-size: var(--font-size-btn);
+      font-weight: 500;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      min-height: 44px; /* FR-F0.5: 44px touch target */
+      min-width: 44px;
+      transition: background-color 0.15s, opacity 0.15s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: #fff;
+      width: 100%;
+      margin-top: var(--space-sm);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-primary-hover);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* 6. Auth Navigation Link and First-Run Notice */
+    .auth-link {
+      text-align: center;
+      margin-top: var(--space-md);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+    }
+
+    .auth-link a {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .auth-link a:hover {
+      text-decoration: underline;
+    }
+
+    .first-run-notice {
+      background-color: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: var(--radius-md);
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--font-size-sm);
+      color: #1D4ED8;
+      margin-bottom: var(--space-lg);
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
