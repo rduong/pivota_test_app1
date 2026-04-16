@@ -284,6 +284,196 @@
         return { firstRun: true };
       }
     };
+
+    // ===== UI namespace — render functions and event binding =====
+    const UI = {
+      // Renders the LOGIN view HTML string
+      // context.firstRun (boolean): if true, shows first-run setup notice
+      renderLogin(context = {}) {
+        const notice = context.firstRun
+          ? `<div class="first-run-notice" role="status" aria-live="polite">
+               ⓘ First time setup: Login with <strong>admin</strong> / <strong>admin123</strong>
+             </div>`
+          : '';
+        return `
+          <main class="auth-page">
+            <h1 class="app-title">TodoApp</h1>
+            ${notice}
+            <div class="auth-card">
+              <form id="login-form" novalidate>
+                <div class="field-group">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" name="username"
+                         autocomplete="username" maxlength="30" required>
+                  <span class="field-error" id="username-error" role="alert" aria-live="assertive"></span>
+                </div>
+                <div class="field-group">
+                  <label for="password">Password</label>
+                  <input type="password" id="password" name="password"
+                         autocomplete="current-password" required>
+                  <span class="field-error" id="password-error" role="alert" aria-live="assertive"></span>
+                </div>
+                <button type="submit" id="login-btn" class="btn btn-primary">Log In</button>
+              </form>
+              <p class="auth-link">
+                Don't have an account? <a href="#" id="go-register">Register →</a>
+              </p>
+            </div>
+          </main>
+        `;
+      },
+
+      // Stub for REGISTER view — full implementation in Phase 3
+      renderRegister() {
+        return `
+          <main class="auth-page">
+            <h1 class="app-title">TodoApp</h1>
+            <div class="auth-card">
+              <p style="text-align:center; color: var(--color-text-muted);">Registration coming soon.</p>
+              <p class="auth-link"><a href="#" id="go-login">← Back to Login</a></p>
+            </div>
+          </main>
+        `;
+      },
+
+      // Stubs for views implemented in later phases
+      renderAdminDashboard() {
+        return `<main class="auth-page"><h1 class="app-title">Admin Dashboard</h1><p style="color:var(--color-text-muted)">Phase 2+</p></main>`;
+      },
+
+      renderUserDashboard() {
+        return `<main class="auth-page"><h1 class="app-title">Dashboard</h1><p style="color:var(--color-text-muted)">Phase 2+</p></main>`;
+      },
+
+      renderAdminViewUser(context = {}) {
+        return `<main class="auth-page"><h1 class="app-title">Admin View User</h1><p style="color:var(--color-text-muted)">Phase 5+</p></main>`;
+      },
+
+      // Binds events AFTER Router.render() has called innerHTML assignment
+      // IMPORTANT: Always bind AFTER innerHTML — elements don't exist before that
+      bindEvents(view, context = {}) {
+        if (view === 'LOGIN') {
+          const goRegister = document.getElementById('go-register');
+          if (goRegister) {
+            goRegister.addEventListener('click', (e) => {
+              e.preventDefault();
+              Router.navigate('REGISTER');
+            });
+          }
+          // Login form submission — placeholder for Phase 2 (Auth)
+          const loginForm = document.getElementById('login-form');
+          if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+              e.preventDefault();
+              // Auth.login() wired in Phase 2
+            });
+          }
+        }
+
+        if (view === 'REGISTER') {
+          const goLogin = document.getElementById('go-login');
+          if (goLogin) {
+            goLogin.addEventListener('click', (e) => {
+              e.preventDefault();
+              Router.navigate('LOGIN');
+            });
+          }
+        }
+      }
+    };
+
+    // ===== Router namespace — client-side state machine =====
+    const Router = {
+      currentView: null,
+      currentContext: {},
+
+      navigate(view, context = {}) {
+        // Role guard: admin-only views require active admin session
+        const session = Storage.get(Config.KEYS.SESSION);
+        if (['ADMIN_DASHBOARD', 'ADMIN_VIEW_USER'].includes(view)) {
+          if (!session || session.role !== 'admin') {
+            this.navigate('USER_DASHBOARD');
+            return;
+          }
+        }
+        // Guard: USER_DASHBOARD requires any valid session
+        if (view === 'USER_DASHBOARD') {
+          if (!session) {
+            this.navigate('LOGIN');
+            return;
+          }
+        }
+        this.currentView = view;
+        this.currentContext = context;
+        this.render();
+      },
+
+      render() {
+        const app = document.getElementById('app');
+        if (!app) return;
+        switch (this.currentView) {
+          case 'LOGIN':
+            app.innerHTML = UI.renderLogin(this.currentContext);
+            break;
+          case 'REGISTER':
+            app.innerHTML = UI.renderRegister();
+            break;
+          case 'ADMIN_DASHBOARD':
+            app.innerHTML = UI.renderAdminDashboard();
+            break;
+          case 'USER_DASHBOARD':
+            app.innerHTML = UI.renderUserDashboard();
+            break;
+          case 'ADMIN_VIEW_USER':
+            app.innerHTML = UI.renderAdminViewUser(this.currentContext);
+            break;
+          default:
+            app.innerHTML = UI.renderLogin({});
+        }
+        // ALWAYS bind events AFTER innerHTML assignment — elements exist only after this point
+        UI.bindEvents(this.currentView, this.currentContext);
+      },
+
+      start(firstRun = false) {
+        const session = Storage.get(Config.KEYS.SESSION);
+        if (!session) {
+          this.navigate('LOGIN', { firstRun });
+        } else if (session.role === 'admin') {
+          this.navigate('ADMIN_DASHBOARD');
+        } else {
+          this.navigate('USER_DASHBOARD');
+        }
+      }
+    };
+
+    // ===== Async entry point =====
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Guard: SubtleCrypto requires secure context (file:// or HTTPS)
+      // Plain http:// will NOT work — inform the user gracefully
+      if (!window.crypto || !window.crypto.subtle) {
+        document.getElementById('app').innerHTML = `
+          <main class="auth-page">
+            <div class="auth-card" style="text-align:center">
+              <p style="color:var(--color-error); font-weight:500; margin-bottom:var(--space-md)">
+                ⚠️ Secure context required
+              </p>
+              <p style="color:var(--color-text-muted); font-size:var(--font-size-sm)">
+                This app requires HTTPS or a local file (file://) to work correctly.
+                Please open index.html directly from your file system.
+              </p>
+            </div>
+          </main>
+        `;
+        return;
+      }
+
+      // Bootstrap: seed admin on first run, get firstRun flag
+      const { firstRun } = await Bootstrap.init();
+
+      // Start router: reads session, routes to appropriate view
+      // Passes firstRun flag so LOGIN view can show first-run notice (FR-F8.3)
+      Router.start(firstRun);
+    });
   </script>
 </body>
 </html>
