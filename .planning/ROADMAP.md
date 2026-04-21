@@ -55,7 +55,7 @@ Plans:
 - [ ] 02-02-PLAN.md — Dashboard render functions, login submit handler, logout binding + human verify
 
 ### Phase 3: Invite System
-**Status**: executing
+**Status**: verifying
 **Goal**: The admin can generate and share invite codes; a new user can register an account using a valid invite code and immediately access the app
 **Depends on**: Phase 2
 **Requirements**: F2, F3
